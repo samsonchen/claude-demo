@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#c4793a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>麥吉肉羹</title>
+  <meta name="description" content="花蓮在地傳統肉羹小吃，手工肉羹湯頭鮮美，料多實在。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          oklch(97.5% 0.011 75);
+      --bg-alt:      oklch(93.5% 0.018 75);
+      --text:        oklch(26%  0.035 55);
+      --text-muted:  oklch(56%  0.022 60);
+      --accent:      oklch(48%  0.14  35);
+      --accent-dark: oklch(40%  0.14  35);
+      --accent-pale: oklch(91%  0.04  60);
+      --border:      oklch(87%  0.018 72);
+      --white:       oklch(99%  0.005 80);
+      --serif:       'Noto Serif TC', serif;
+      --sans:        'Noto Sans TC', sans-serif;
+      --nav-bg:      oklch(97.5% 0.011 75 / 0.92);
+      --footer-bg:   oklch(26%  0.035 55);
+      --surface:     var(--white);
+    }
+
+    body[data-theme="green"] {
+      --bg:          oklch(96.5% 0.016 150);
+      --bg-alt:      oklch(91%  0.025 150);
+      --text:        oklch(22%  0.03  145);
+      --text-muted:  oklch(52%  0.025 145);
+      --accent:      oklch(44%  0.14  148);
+      --accent-dark: oklch(37%  0.14  148);
+      --accent-pale: oklch(91%  0.04  150);
+      --border:      oklch(85%  0.022 150);
+      --nav-bg:      oklch(96.5% 0.016 150 / 0.92);
+      --footer-bg:   oklch(22%  0.03  145);
+    }
+
+    body[data-theme="dark"] {
+      --bg:          oklch(16%  0.02  55);
+      --bg-alt:      oklch(20%  0.022 55);
+      --text:        oklch(91%  0.012 75);
+      --text-muted:  oklch(63%  0.018 72);
+      --accent:      oklch(68%  0.15  50);
+      --accent-dark: oklch(60%  0.15  50);
+      --accent-pale: oklch(24%  0.05  50);
+      --border:      oklch(30%  0.025 55);
+      --surface:     oklch(23%  0.022 55);
+      --nav-bg:      oklch(16%  0.02  55 / 0.92);
+      --footer-bg:   oklch(11%  0.015 55);
+    }
+    body[data-theme="dark"] .dish-card { box-shadow: 0 2px 14px oklch(0% 0 0 / 0.35); }
+    body[data-theme="dark"] .about-photo { box-shadow: 0 8px 32px oklch(0% 0 0 / 0.35); }
+
+    body[data-theme="blue"] {
+      --bg:          oklch(97%  0.011 230);
+      --bg-alt:      oklch(92%  0.019 230);
+      --text:        oklch(22%  0.03  230);
+      --text-muted:  oklch(52%  0.025 230);
+      --accent:      oklch(48%  0.15  245);
+      --accent-dark: oklch(40%  0.15  245);
+      --accent-pale: oklch(91%  0.04  230);
+      --border:      oklch(86%  0.02  230);
+      --nav-bg:      oklch(97%  0.011 230 / 0.92);
+      --footer-bg:   oklch(22%  0.03  230);
+    }
+
+    /* ===== Reset ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      touch-action: manipulation;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2rem;
+      background: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 16px oklch(0% 0 0 / 0.08); }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.75rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* Theme switcher */
+    .theme-switcher {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-left: 1rem;
+    }
+    .theme-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+      min-width: 18px;
+    }
+    .theme-dot:hover { transform: scale(1.2); }
+    .theme-dot.active { border-color: var(--text); }
+    .theme-dot[data-theme="warm"]  { background: #c4793a; }
+    .theme-dot[data-theme="green"] { background: #3c6b41; }
+    .theme-dot[data-theme="dark"]  { background: #c8855a; outline: 1px solid #555; }
+    .theme-dot[data-theme="blue"]  { background: #2a5a8a; }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .theme-switcher { margin-left: auto; }
+      nav { padding: 0.8rem 1.25rem; }
+    }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 560px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('images/exterior/店面照片.jpeg');
+      background-size: cover;
+      background-position: center 25%;
+      transform: scale(1.04);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        oklch(0% 0 0 / 0.35) 0%,
+        oklch(0% 0 0 / 0.52) 60%,
+        oklch(0% 0 0 / 0.68) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+      padding: 2rem;
+      max-width: 640px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.4em;
+      opacity: 0.75;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(3.2rem, 11vw, 6rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.05;
+      margin-bottom: 1.1rem;
+      text-shadow: 0 2px 24px oklch(0% 0 0 / 0.45);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+      opacity: 0.82;
+      margin-bottom: 2.8rem;
+      letter-spacing: 0.05em;
+      font-weight: 300;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 390px) {
+      .hero-ctas {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+    }
+
+    /* ─── BUTTONS ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0.75rem 2.2rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      border-radius: 1px;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-fill {
+      background: var(--accent);
+      color: var(--white);
+      border-color: var(--accent);
+    }
+    .btn-fill:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border-color: oklch(100% 0 0 / 0.6);
+    }
+    .btn-ghost:hover { background: oklch(100% 0 0 / 0.12); }
+
+    /* ─── SECTION LAYOUT ──────────────────────────────── */
+    .section { padding: 5.5rem 1.5rem; }
+    .section-alt { background: var(--bg-alt); }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1280px) {
+      .container { max-width: 1100px; }
+    }
+
+    .section-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--accent);
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.65rem, 4vw, 2.5rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+
+    .rule {
+      width: 36px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ─── ABOUT ───────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (max-width: 680px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .about-desc {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 1.8rem;
+    }
+
+    .rating-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: var(--accent-pale);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.1rem;
+      border-radius: 2px;
+    }
+    .rating-num {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .rating-stars { color: oklch(68% 0.17 65); font-size: 0.95rem; letter-spacing: 0.05em; }
+    .rating-label { font-size: 0.8rem; color: var(--text-muted); }
+
+    .about-photo {
+      border-radius: 2px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: 0 8px 32px oklch(0% 0 0 / 0.1);
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ─── MENU ────────────────────────────────────────── */
+    .menu-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .menu-tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      flex-shrink: 0;
+      padding: 0.7rem 1.3rem;
+      min-height: 44px;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.18s, border-color 0.18s;
+      letter-spacing: 0.03em;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .tab-btn:hover { color: var(--accent); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* 手機：單欄 */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    /* 平板：雙欄 */
+    @media (min-width: 768px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 3rem;
+      }
+    }
+
+    /* 桌機：三欄 */
+    @media (min-width: 1280px) {
+      .menu-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .menu-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .menu-row:last-child { border-bottom: none; }
+
+    .menu-name { font-size: 0.95rem; }
+    .menu-price {
+      font-size: 0.875rem;
+      color: var(--accent);
+      white-space: nowrap;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .menu-loading {
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ─── DISHES ──────────────────────────────────────── */
+    /* 手機：兩欄 */
+    .dishes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    /* 平板：三欄 */
+    @media (min-width: 768px) {
+      .dishes-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    }
+
+    /* 桌機：四欄 */
+    @media (min-width: 1280px) {
+      .dishes-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .dish-card {
+      background: var(--surface);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 2px 14px oklch(0% 0 0 / 0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .dish-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px oklch(0% 0 0 / 0.12);
+    }
+    .dish-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
+    .dish-label {
+      padding: 0.85rem 1rem;
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    /* ─── ENVIRONMENT ─────────────────────────────────── */
+    .env-wrap {
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px oklch(0% 0 0 / 0.1);
+    }
+    .env-wrap img {
+      width: 100%;
+      max-height: 500px;
+      object-fit: cover;
+      display: block;
+    }
+    .env-caption {
+      margin-top: 1.2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── HOURS & CONTACT ─────────────────────────────── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+    @media (max-width: 640px) { .info-grid { grid-template-columns: 1fr; gap: 3rem; } }
+
+    .info-heading {
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr { border-bottom: 1px solid var(--border); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td { padding: 0.65rem 0; font-size: 0.9rem; vertical-align: middle; }
+    .hours-table td.day { color: var(--text-muted); width: 3.2em; }
+    .hours-table td.closed { color: var(--text-muted); font-style: italic; }
+    .hours-table tr.today td { color: var(--accent); font-weight: 600; }
+    .today-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      background: var(--accent);
+      color: white;
+      padding: 0.1em 0.45em;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .contact-list { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item { display: flex; gap: 0.85rem; align-items: flex-start; }
+    .contact-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      color: var(--accent);
+      margin-top: 0.2rem;
+    }
+    .contact-text { font-size: 0.95rem; line-height: 1.55; }
+    .contact-text a {
+      color: var(--accent);
+      text-decoration: none;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .contact-text a:hover { text-decoration: underline; }
+
+    /* ─── MAP ─────────────────────────────────────────── */
+    .map-container {
+      width: 100%;
+      height: 300px;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 16px oklch(0% 0 0 / 0.07);
+    }
+
+    @media (min-width: 768px) {
+      .map-container { height: 400px; }
+    }
+
+    @media (min-width: 1280px) {
+      .map-container { height: 480px; }
+    }
+
+    .map-container iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--footer-bg);
+      color: oklch(88% 0.012 72);
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-links a {
+      color: oklch(70% 0.018 68);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .footer-links a:hover { color: oklch(92% 0.015 72); }
+    .footer-copy { font-size: 0.78rem; color: oklch(60% 0.015 68); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#hero" class="nav-logo">麥吉肉羹</a>
+    <ul class="nav-links">
+      <li><a href="#about">關於我們</a></li>
+      <li><a href="#menu">菜單</a></li>
+      <li><a href="#dishes">招牌品項</a></li>
+      <li><a href="#hours">營業資訊</a></li>
+      <li><a href="#map">地圖</a></li>
+    </ul>
+    <div class="theme-switcher" aria-label="切換主題">
+      <button class="theme-dot active" data-theme="warm"  title="暖米白" aria-label="暖米白主題"></button>
+      <button class="theme-dot"        data-theme="green" title="素雅綠" aria-label="素雅綠主題"></button>
+      <button class="theme-dot"        data-theme="dark"  title="深夜食堂" aria-label="深夜食堂主題"></button>
+      <button class="theme-dot"        data-theme="blue"  title="海洋藍" aria-label="海洋藍主題"></button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero" id="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">花蓮 · 傳統小吃</p>
+      <h1 class="hero-title">麥吉肉羹</h1>
+      <p class="hero-subtitle">從一碗肉羹開始，感受最道地的花蓮好味道</p>
+      <div class="hero-ctas">
+        <a href="#menu" class="btn btn-fill">查看菜單</a>
+        <a href="#map"  class="btn btn-ghost">找到我們</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <p class="section-eyebrow">關於我們</p>
+          <h2 class="section-title">在地老字號<br>一碗暖胃的好味道</h2>
+          <div class="rule"></div>
+          <p class="about-desc">
+            位於花蓮市的麥吉肉羹，是一間在地人口耳相傳的傳統小吃店。以手工製作的肉羹為招牌，搭配爽滑的麵條或白飯，湯頭清甜鮮美，料多實在，是許多花蓮人從小吃到大的家鄉味。
+          </p>
+          <div class="rating-chip" id="rating-chip" style="display:none;">
+            <span class="rating-num" id="rating-num"></span>
+            <div>
+              <div class="rating-stars" id="rating-stars"></div>
+              <div class="rating-label" id="rating-label"></div>
+            </div>
+          </div>
+        </div>
+        <div class="about-photo">
+          <img src="images/dishes/招牌肉羹.jpeg" alt="招牌肉羹" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="section section-alt" id="menu">
+    <div class="container">
+      <p class="section-eyebrow">菜單</p>
+      <h2 class="section-title">品項一覽</h2>
+      <div class="rule"></div>
+      <div id="menu-root">
+        <div class="menu-loading">載入菜單中…</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISHES -->
+  <section class="section" id="dishes">
+    <div class="container">
+      <p class="section-eyebrow">招牌品項</p>
+      <h2 class="section-title">看看我們的招牌</h2>
+      <div class="rule"></div>
+      <div class="dishes-grid" id="dishes-grid"></div>
+    </div>
+  </section>
+
+  <!-- ENVIRONMENT -->
+  <section class="section section-alt" id="environment">
+    <div class="container">
+      <p class="section-eyebrow">環境介紹</p>
+      <h2 class="section-title">走進麥吉</h2>
+      <div class="rule"></div>
+      <div class="env-wrap">
+        <img src="images/interior/室內環境.jpeg" alt="室內用餐環境" loading="lazy">
+      </div>
+      <p class="env-caption">簡樸舒適的用餐空間，輕鬆享用每一口</p>
+    </div>
+  </section>
+
+  <!-- HOURS & CONTACT -->
+  <section class="section" id="hours">
+    <div class="container">
+      <p class="section-eyebrow">營業資訊</p>
+      <h2 class="section-title">來訪前確認時間</h2>
+      <div class="rule"></div>
+      <div class="info-grid">
+        <div>
+          <p class="info-heading">營業時間</p>
+          <table class="hours-table">
+            <tbody id="hours-tbody"></tbody>
+          </table>
+        </div>
+        <div>
+          <p class="info-heading">聯絡方式</p>
+          <div class="contact-list" id="contact-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAP -->
+  <section class="section section-alt" id="map">
+    <div class="container">
+      <p class="section-eyebrow">找到我們</p>
+      <h2 class="section-title">地圖導航</h2>
+      <div class="rule"></div>
+      <div class="map-container" id="map-frame"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-name">麥吉肉羹</p>
+    <div class="footer-links" id="footer-links"></div>
+    <p class="footer-copy" id="footer-copy"></p>
+  </footer>
+
+  <script>
+    const DAY_KEYS    = ['sun','mon','tue','wed','thu','fri','sat'];
+    const DAY_NAMES   = { mon:'週一', tue:'週二', wed:'週三', thu:'週四', fri:'週五', sat:'週六', sun:'週日' };
+    const DISP_ORDER  = ['mon','tue','wed','thu','fri','sat','sun'];
+
+    function starsHTML(r) {
+      const full = Math.floor(r), half = (r % 1) >= 0.5, empty = 5 - full - (half ? 1 : 0);
+      return '★'.repeat(full) + (half ? '⯨' : '') + '☆'.repeat(empty);
+    }
+
+    // Nav scroll shadow
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Hero ken-burns
+    window.addEventListener('load', () => {
+      document.getElementById('hero-bg').classList.add('loaded');
+    });
+
+    // Theme switcher
+    const THEME_ATTR = { warm: null, green: 'green', dark: 'dark', blue: 'blue' };
+    document.querySelectorAll('.theme-dot').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.dataset.theme;
+        document.querySelectorAll('.theme-dot').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const attr = THEME_ATTR[theme];
+        if (attr) {
+          document.body.setAttribute('data-theme', attr);
+        } else {
+          document.body.removeAttribute('data-theme');
+        }
+      });
+    });
+
+    // Load restaurant.json
+    async function initRestaurant() {
+      let data;
+      try {
+        const res = await fetch('data/restaurant.json');
+        data = await res.json();
+      } catch (e) {
+        console.error('restaurant.json 載入失敗', e);
+        return;
+      }
+
+      document.title = data.name || '麥吉肉羹';
+
+      // Rating
+      if (data.rating) {
+        const chip = document.getElementById('rating-chip');
+        chip.style.display = 'inline-flex';
+        document.getElementById('rating-num').textContent   = Number(data.rating).toFixed(1);
+        document.getElementById('rating-stars').textContent = starsHTML(data.rating);
+        document.getElementById('rating-label').textContent = `${data.reviewCount || ''} 則 Google 評論`.trim();
+      }
+
+      // Dishes
+      const grid = document.getElementById('dishes-grid');
+      (data.photos?.dishes || []).forEach(path => {
+        const name = path.split('/').pop().replace(/\.\w+$/, '');
+        const card = document.createElement('div');
+        card.className = 'dish-card';
+        card.innerHTML = `<img src="${path}" alt="${name}" loading="lazy"><div class="dish-label">${name}</div>`;
+        grid.appendChild(card);
+      });
+
+      // Hours
+      const todayKey = DAY_KEYS[new Date().getDay()];
+      const tbody = document.getElementById('hours-tbody');
+      DISP_ORDER.forEach(key => {
+        const val    = data.hours?.[key] || '休息';
+        const closed = val === '休息';
+        const isToday = key === todayKey;
+        const tr = document.createElement('tr');
+        if (isToday) tr.classList.add('today');
+        tr.innerHTML = `
+          <td class="day">${DAY_NAMES[key]}${isToday ? '<span class="today-badge">今天</span>' : ''}</td>
+          <td class="${closed ? 'closed' : ''}">${val}</td>`;
+        tbody.appendChild(tr);
+      });
+
+      // Contact
+      const svgPhone = `<svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.6a16 16 0 0 0 6.29 6.29l1.96-1.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`;
+      const svgPin  = `<svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`;
+      const svgLink = `<svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+
+      const contactList = document.getElementById('contact-list');
+      const items = [];
+      if (data.phone)   items.push(`<div class="contact-item">${svgPhone}<div class="contact-text"><a href="tel:${data.phone}">${data.phone}</a></div></div>`);
+      if (data.address) items.push(`<div class="contact-item">${svgPin}<div class="contact-text">${data.address}</div></div>`);
+      if (data.website) items.push(`<div class="contact-item">${svgLink}<div class="contact-text"><a href="${data.website}" target="_blank" rel="noopener noreferrer">Facebook 粉絲頁</a></div></div>`);
+      contactList.innerHTML = items.join('');
+
+      // Map
+      if (data.embedUrl) {
+        document.getElementById('map-frame').innerHTML =
+          `<iframe src="${data.embedUrl}" title="麥吉肉羹位置" allowfullscreen="" loading="lazy"></iframe>`;
+      }
+
+      // Footer
+      const year = new Date().getFullYear();
+      const footLinks = document.getElementById('footer-links');
+      const linkItems = [
+        `<a href="#menu">菜單</a>`,
+        `<a href="#hours">營業時間</a>`,
+        `<a href="#map">地圖</a>`,
+      ];
+      if (data.website) linkItems.push(`<a href="${data.website}" target="_blank" rel="noopener noreferrer">Facebook</a>`);
+      footLinks.innerHTML = linkItems.join('');
+      document.getElementById('footer-copy').textContent = `© ${year} ${data.name}．All rights reserved`;
+    }
+
+    // Load menu.json
+    async function initMenu() {
+      const root = document.getElementById('menu-root');
+      let data;
+      try {
+        const res = await fetch('data/menu.json');
+        data = await res.json();
+      } catch (e) {
+        root.innerHTML = '<p class="menu-loading">菜單資料暫時無法載入</p>';
+        return;
+      }
+
+      const cats = data.categories || [];
+      if (!cats.length) {
+        root.innerHTML = '<p class="menu-loading">目前無菜單資料</p>';
+        return;
+      }
+
+      const tabsHTML = cats.map((cat, i) =>
+        `<button class="tab-btn${i === 0 ? ' active' : ''}" data-tab="${i}">${cat.name}</button>`
+      ).join('');
+
+      const panelsHTML = cats.map((cat, i) => {
+        const rows = cat.items.map(item =>
+          `<div class="menu-row">
+            <span class="menu-name">${item.name}</span>
+            <span class="menu-price">${item.price}</span>
+          </div>`
+        ).join('');
+        return `<div class="tab-panel${i === 0 ? ' active' : ''}" data-panel="${i}">
+                  <div class="menu-grid">${rows}</div>
+                </div>`;
+      }).join('');
+
+      root.innerHTML = `<div class="menu-tabs">${tabsHTML}</div>${panelsHTML}`;
+
+      root.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = btn.dataset.tab;
+          root.querySelectorAll('.tab-btn').forEach(b  => b.classList.remove('active'));
+          root.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          root.querySelector(`.tab-panel[data-panel="${idx}"]`).classList.add('active');
+        });
+      });
+    }
+
+    initRestaurant();
+    initMenu();
+  </script>
+
+</body>
+</html>
