@@ -1,0 +1,63 @@
+{
+  "categories": [
+    {
+      "name": "肉羹類",
+      "items": [
+        { "name": "肉羹飯", "price": "小$75 / 大$85", "description": "" },
+        { "name": "肉羹麵", "price": "小$75 / 大$85", "description": "" },
+        { "name": "肉羹意麵", "price": "小$75 / 大$85", "description": "" },
+        { "name": "肉羹米粉", "price": "小$75 / 大$85", "description": "" },
+        { "name": "肉羹冬粉", "price": "小$75 / 大$85", "description": "" }
+      ]
+    },
+    {
+      "name": "乾麵類",
+      "items": [
+        { "name": "乾意麵", "price": "小$55 / 大$65", "description": "" },
+        { "name": "乾油麵", "price": "小$55 / 大$65", "description": "" },
+        { "name": "乾米粉", "price": "小$55 / 大$65", "description": "" },
+        { "name": "乾冬粉", "price": "小$55 / 大$65", "description": "" },
+        { "name": "陽春麵", "price": "小$55 / 大$65", "description": "" },
+        { "name": "切仔麵", "price": "小$55 / 大$65", "description": "" },
+        { "name": "米粉湯", "price": "小$55 / 大$65", "description": "" },
+        { "name": "冬粉湯", "price": "小$55 / 大$65", "description": "" },
+        { "name": "滷肉飯", "price": "小$30 / 大$40", "description": "" }
+      ]
+    },
+    {
+      "name": "湯類",
+      "items": [
+        { "name": "肉羹湯", "price": "小$55 / 大$75", "description": "" },
+        { "name": "貢丸湯", "price": "$35", "description": "" },
+        { "name": "粉腸湯", "price": "$35", "description": "" },
+        { "name": "豬心湯", "price": "$35", "description": "" },
+        { "name": "肝連湯", "price": "$35", "description": "" }
+      ]
+    },
+    {
+      "name": "小菜",
+      "items": [
+        { "name": "燙青菜", "price": "$40", "description": "" },
+        { "name": "海帶", "price": "$20/份", "description": "" },
+        { "name": "豆干", "price": "$20/份", "description": "" },
+        { "name": "肝連", "price": "$50", "description": "" },
+        { "name": "粉腸", "price": "$50", "description": "" },
+        { "name": "生腸", "price": "$50", "description": "" },
+        { "name": "豬心", "price": "$50", "description": "" },
+        { "name": "豬舌", "price": "$50", "description": "" },
+        { "name": "豬皮", "price": "$30", "description": "" },
+        { "name": "豬尾巴", "price": "", "description": "" },
+        { "name": "豬耳朵", "price": "$40", "description": "" },
+        { "name": "嘴邊肉", "price": "$50", "description": "" },
+        { "name": "滷蛋", "price": "$15", "description": "" },
+        { "name": "油豆腐", "price": "$25", "description": "" }
+      ]
+    },
+    {
+      "name": "飲料",
+      "items": [
+        { "name": "紅茶", "price": "$15", "description": "" }
+      ]
+    }
+  ]
+}
