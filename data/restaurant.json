@@ -1,0 +1,31 @@
+{
+  "name": "麥吉肉羹",
+  "type": "餐廳",
+  "address": "970花蓮縣花蓮市民運里化道路6號",
+  "phone": "03 822 5939",
+  "hours": {
+    "mon": "09:30–14:00 / 16:00–19:30",
+    "tue": "09:30–14:00 / 16:00–19:30",
+    "wed": "09:30–14:00 / 16:00–19:30",
+    "thu": "09:30–14:00 / 16:00–19:30",
+    "fri": "09:30–14:00 / 16:00–19:30",
+    "sat": "休息",
+    "sun": "休息"
+  },
+  "rating": 4.5,
+  "reviewCount": 141,
+  "website": "https://www.facebook.com/MaiJiRouGengDian/?locale=zh_TW",
+  "googleMapsUrl": "https://www.google.com.tw/maps/place/%E9%BA%A5%E5%90%89%E8%82%89%E7%BE%B9/@23.9938488,121.631322,17z/data=!4m17!1m10!3m9!1s0x34662080f9a8483f:0x419c500f05cfadc6!2z6bql5ZCJ6IKJ5765!8m2!3d23.9938961!4d121.6314101!10e5!14m1!1BCgIgAQ!16s%2Fg%2F11bx559f7_!3m5!1s0x34662080f9a8483f:0x419c500f05cfadc6!8m2!3d23.9938961!4d121.6314101!16s%2Fg%2F11bx559f7_",
+  "embedUrl": "https://maps.google.com/maps?q=23.9938961,121.6314101&output=embed",
+  "hasMenu": true,
+  "photos": {
+    "exterior": ["images/exterior/店面照片.jpeg"],
+    "interior": ["images/interior/室內環境.jpeg"],
+    "dishes": [
+      "images/dishes/小菜.jpeg",
+      "images/dishes/招牌肉羹.jpeg",
+      "images/dishes/肉羹麵.jpeg"
+    ],
+    "menu": ["images/menu/菜單.jpeg"]
+  }
+}
